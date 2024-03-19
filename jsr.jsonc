@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "exports": "./src/mod.ts",
   "publish": {
-    "include": ["./src/**/*", "LICENSE", "README.md"]
+    "exclude": ["./index.html"],
+    "include": ["./src/**/*", "./**"]
   }
 }
