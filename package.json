@@ -1,0 +1,24 @@
+{
+  "name": "@socketauthn/client",
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.2",
+    "vite": "^5.1.6"
+  },
+  "dependencies": {
+    "@simplewebauthn/browser": "^9.0.1",
+    "@types/websocket": "^1.0.10"
+  },
+  "module": "./dist/my-lib.js",
+  "exports": {
+    ".": {
+      "import": "./dist/my-lib.js"
+    }
+  }
+}
