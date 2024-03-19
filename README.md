@@ -14,7 +14,18 @@ The same applies when logging in.
 ## How to use
 ### Add to your project
 #### Using a script tag:
-Work in Progress
+As a module
+```html
+<script type="module">
+    import * as socketauthn from "https://cdn.jsdelivr.net/gh/oxydemeton/socketauthn-client/dist/mod.min.js"
+</script>
+```
+Or single functions
+```html
+<script type="module">
+    import { loginUser, registerUser } from "https://cdn.jsdelivr.net/gh/oxydemeton/socketauthn-client/dist/mod.min.js"
+</script>
+```
 
 #### Using npm
 Install using:
@@ -28,7 +39,27 @@ import { registerUser, loginUser } from "@socketauthn/client";
 ```
 
 ### Use functions
-Example from this project:
+#### With npm:
+```js
+import { registerUser, loginUser } from "@socketauthn/client";
+registerUser("unique username", "wss://serverip/registerpath")
+```
+#### In Html
+```html
+<script type="module">
+    import * as socketauthn from "https://cdn.jsdelivr.net/gh/oxydemeton/socketauthn-client/dist/mod.min.js"
+    loginUser(...,...)
+</script>
+```
+Or 
+```html
+<script type="module">
+    import { loginUser, registerUser } from "https://cdn.jsdelivr.net/gh/oxydemeton/socketauthn-client/dist/mod.min.js"
+    loginUser(...,...)
+</script>
+```
+
+### Example from this project:
 ```ts
 document.getElementById("form")!.addEventListener("submit", (e)=>e.preventDefault())
 document.getElementById("register")!.addEventListener("click", async (e)=> {
