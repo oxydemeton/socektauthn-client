@@ -15,7 +15,7 @@ import { startAuthentication, startRegistration } from "@simplewebauthn/browser"
  * ```
  */
 export async function registerUser(userName: string, path: URL | string): Promise<void> {
-  return new Promise<void>((res, _rej) => {
+  return new Promise<void>((res, rej) => {
     const server = new URL(path)
     if (!server.protocol.startsWith("ws")) throw new Error(`Invalid protocol for url: ${server}`)
 
@@ -37,8 +37,12 @@ export async function registerUser(userName: string, path: URL | string): Promis
       console.log("Ws onerror: ", ev);
     }
     socket.onclose = (ev) => {
-      res()
-      console.info("Socket closed: ", ev.reason)
+      if (ev.code !== 1000) {
+        console.error("Socket closed with error code: ", ev.code, ev.reason);
+        rej()
+      } else {
+        res()
+      }
     }
   })
 }
@@ -58,7 +62,7 @@ export async function registerUser(userName: string, path: URL | string): Promis
  * ```
  */
 export async function loginUser(userName: string, path: URL | string): Promise<void> {
-  return new Promise<void>((res, _rej) => {
+  return new Promise<void>((res, rej) => {
     const server = new URL(path)
     if (!server.protocol.startsWith("ws")) throw new Error(`Invalid protocol for url: ${server}`)
 
@@ -81,8 +85,12 @@ export async function loginUser(userName: string, path: URL | string): Promise<v
       console.log("Ws onerror: ", ev);
     }
     socket.onclose = (ev) => {
-      res()
-      console.info("Socket closed: ", ev.reason)
+      if (ev.code !== 1000) {
+        console.error("Socket closed with error code: ", ev.code, ev.reason);
+        rej()
+      } else {
+        res()
+      }
     }
   })
 }
