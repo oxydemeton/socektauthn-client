@@ -22,25 +22,24 @@ jobs:
       - name: Publish package
         run: npx jsr publish
       
-#  build:
-#    name: Build
-#    needs: publish
-#    runs-on: ubuntu-latest
-#    permissions:
-#      contents: write
-#
-#    steps:
-#      - name: Checkout repo
-#        uses: actions/checkout@v4
-#
-#      - name: Setup Node
-#        uses: actions/setup-node@v4
-#
-#      - name: Install dependencies
-#        uses: bahmutov/npm-install@v1
-#
-#      - name: Build project
-#        run: npm run build
-#      - uses: stefanzweifel/git-auto-commit-action@v5
-#        with:
-#          commit_message: Vite build
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+
+      - name: Install dependencies
+        uses: bahmutov/npm-install@v1
+
+      - name: Build project
+        run: npm run build
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Vite build
