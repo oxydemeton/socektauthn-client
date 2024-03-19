@@ -1,10 +1,24 @@
 import { startAuthentication, startRegistration } from "@simplewebauthn/browser";
 
+/**Register a new user.
+ * @param userName Specifies the unique user name that a new user wants. Can be an email for example
+ * @param path a url to the register endpoint of your socketauthn api
+ * @throws Throws an error when the registration fails
+ * 
+ * @example
+ * ```ts
+ * document.getElementById("register")!.addEventListener("click", async (e)=> {
+ *   e.preventDefault()
+ *   const userName = (document.getElementById("username")! as HTMLInputElement).value
+ *   await registerUser(userName, new URL("ws://localhost:5180/register"))
+ * })
+ * ```
+ */
 export async function registerUser(userName: string, path: URL | string): Promise<void> {
-  return new Promise<void>((res, _rej)=> {
+  return new Promise<void>((res, _rej) => {
     const server = new URL(path)
     if (!server.protocol.startsWith("ws")) throw new Error(`Invalid protocol for url: ${server}`)
-  
+
     server.searchParams.append("username", userName)
     const socket = new WebSocket(server)
     socket.onmessage = async (ev) => {
@@ -29,14 +43,28 @@ export async function registerUser(userName: string, path: URL | string): Promis
   })
 }
 
+/**Login  an existing user.
+ * @param userName Specifies the unique user name that is assigned to a user
+ * @param path a url to the login endpoint of your socketauthn api
+ * @throws Throws an error when the login fails
+ * 
+ * @example
+```ts
+ * document.getElementById("login")!.addEventListener("click", async (e)=> {
+ *   e.preventDefault()
+ *   const userName = (document.getElementById("username")! as HTMLInputElement).value
+ *   await loginUser(userName, new URL("ws://localhost:5180/login"))
+ * })
+ * ```
+ */
 export async function loginUser(userName: string, path: URL | string): Promise<void> {
   return new Promise<void>((res, _rej) => {
     const server = new URL(path)
     if (!server.protocol.startsWith("ws")) throw new Error(`Invalid protocol for url: ${server}`)
-  
+
     server.searchParams.append("username", userName)
     const socket = new WebSocket(server)
-  
+
     socket.onmessage = async (ev) => {
       const serverConfig = JSON.parse(ev.data)
       let attResp;
