@@ -6,5 +6,8 @@
   "publish": {
     "exclude": ["./index.html"],
     "include": ["./src/**/*", "./**"]
+  },
+  "imports": {
+    "@simplewebauthn/browser": "npm:@simplewebauthn/browser"
   }
 }
