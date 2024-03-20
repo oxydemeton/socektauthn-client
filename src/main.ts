@@ -13,4 +13,6 @@ document.getElementById("login")!.addEventListener("click", async (e)=> {
   const userName = (document.getElementById("username")! as HTMLInputElement).value
   const socket = await loginUser(userName, new URL("ws://localhost:5180/login"))
   socket.close()
+  console.log("Logged in successfully");
+  
 })
