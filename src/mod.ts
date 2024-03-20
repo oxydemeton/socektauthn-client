@@ -67,7 +67,7 @@ export async function registerUser(userName: string, path: URL | string): Promis
  * ```
  */
 export async function loginUser(userName: string, path: URL | string): Promise<WebSocket> {
-  return new Promise<WebSocket>((res, rej) => {
+  return new Promise<WebSocket>((res, _rej) => {
     const server = new URL(path)
     if (!server.protocol.startsWith("ws")) throw new Error(`Invalid protocol for url: ${server}`)
 
