@@ -39,6 +39,7 @@ import { registerUser, loginUser } from "@socketauthn/client";
 ```
 
 ### Use functions
+Keep in mind to close the returned socket connections or close them on the server side!
 #### With npm:
 ```js
 import { registerUser, loginUser } from "@socketauthn/client";
@@ -65,12 +66,14 @@ document.getElementById("form")!.addEventListener("submit", (e)=>e.preventDefaul
 document.getElementById("register")!.addEventListener("click", async (e)=> {
   e.preventDefault()
   const userName = (document.getElementById("username")! as HTMLInputElement).value
-  await registerUser(userName, new URL("ws://localhost:5180/register"))
+  const socket = await registerUser(userName, new URL("ws://localhost:5180/register"))
+  socket.close()
 })
 document.getElementById("login")!.addEventListener("click", async (e)=> {
   e.preventDefault()
   const userName = (document.getElementById("username")! as HTMLInputElement).value
-  await loginUser(userName, new URL("ws://localhost:5180/login"))
+  const socket = await loginUser(userName, new URL("ws://localhost:5180/login"))
+  socket.close()
 })
 ```
 In combination with the index.html
