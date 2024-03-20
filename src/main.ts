@@ -11,7 +11,7 @@ document.getElementById("register")!.addEventListener("click", async (e)=> {
 document.getElementById("login")!.addEventListener("click", async (e)=> {
   e.preventDefault()
   const userName = (document.getElementById("username")! as HTMLInputElement).value
-  const socket = await loginUser(userName, new URL("ws://localhost:5180/login"))
+  const socket = await loginUser(userName, new URL("ws://localhost:5180/login"))  
   socket.close()
   console.log("Logged in successfully");
   

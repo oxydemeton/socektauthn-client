@@ -85,22 +85,14 @@ export async function loginUser(userName: string, path: URL | string): Promise<W
         throw error;
       }
       socket.send(JSON.stringify(attResp))
-    }
-    socket.onerror = (ev) => {
-      console.log("Ws onerror: ", ev);
-    }
-    socket.onclose = (ev) => {
-      if (ev.code !== 1000) {
-        console.error("Socket closed with error code: ", ev.code, ev.reason);
-        rej()
-      } else {
-        //Remove all listeners for custom post auth use
-        socket.onclose = ()=>{}
+      socket.onclose = ()=>{}
         socket.onerror = ()=>{}
         socket.onmessage = ()=>{}
         socket.onopen = ()=>{}
         res(socket)
-      }
+    }
+    socket.onerror = (ev) => {
+      console.log("Ws onerror: ", ev);
     }
   })
 }
