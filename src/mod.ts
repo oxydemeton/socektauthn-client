@@ -14,8 +14,8 @@ import { startAuthentication, startRegistration } from "@simplewebauthn/browser"
  * })
  * ```
  */
-export async function registerUser(userName: string, path: URL | string): Promise<void> {
-  return new Promise<void>((res, rej) => {
+export async function registerUser(userName: string, path: URL | string): Promise<WebSocket> {
+  return new Promise<WebSocket>((res, rej) => {
     const server = new URL(path)
     if (!server.protocol.startsWith("ws")) throw new Error(`Invalid protocol for url: ${server}`)
 
@@ -41,7 +41,12 @@ export async function registerUser(userName: string, path: URL | string): Promis
         console.error("Socket closed with error code: ", ev.code, ev.reason);
         rej()
       } else {
-        res()
+        //Remove all listeners for custom post auth use
+        socket.onclose = ()=>{}
+        socket.onerror = ()=>{}
+        socket.onmessage = ()=>{}
+        socket.onopen = ()=>{}
+        res(socket)
       }
     }
   })
@@ -61,8 +66,8 @@ export async function registerUser(userName: string, path: URL | string): Promis
  * })
  * ```
  */
-export async function loginUser(userName: string, path: URL | string): Promise<void> {
-  return new Promise<void>((res, rej) => {
+export async function loginUser(userName: string, path: URL | string): Promise<WebSocket> {
+  return new Promise<WebSocket>((res, rej) => {
     const server = new URL(path)
     if (!server.protocol.startsWith("ws")) throw new Error(`Invalid protocol for url: ${server}`)
 
@@ -89,7 +94,12 @@ export async function loginUser(userName: string, path: URL | string): Promise<v
         console.error("Socket closed with error code: ", ev.code, ev.reason);
         rej()
       } else {
-        res()
+        //Remove all listeners for custom post auth use
+        socket.onclose = ()=>{}
+        socket.onerror = ()=>{}
+        socket.onmessage = ()=>{}
+        socket.onopen = ()=>{}
+        res(socket)
       }
     }
   })
